@@ -1,0 +1,8 @@
+{
+  "name": "Remix Remix Liquid Glass Hub - منصة التواصل والدفع",
+  "description": "منصة تفاعلية بتصميم زجاجي سائل فاخر (Liquid Glass) مع شريط تنقل ذكي وصفحات مخصصة لوسائل التواصل والدفع الإلكتروني.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
