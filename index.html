@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Yasser Mohamed</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap">
+<style>
+:root{
+  --page:#868a94; --bar:#0f0f1c; --ink:#ffffff; --disc:#ffffff; --disc-ink:#0f0f1c;
+  --ease:cubic-bezier(.6,0,.2,1); --dur:.55s;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ --page:#2b2d35; --bar:#0b0b14; color-scheme:dark; }
+}
+:root[data-theme="dark"]{ --page:#2b2d35; --bar:#0b0b14; color-scheme:dark; }
+html,body{ height:100%; margin:0; }
+body{ background:radial-gradient(120% 55% at 50% 0,rgba(255,255,255,.22),transparent 60%) fixed,var(--page); font-family:"Cairo","Segoe UI",system-ui,sans-serif; }
+.nav{ position:fixed; left:0; right:0; margin:0 auto; bottom:22px; z-index:5; width:min(380px,94vw); height:66px; filter:drop-shadow(0 14px 16px rgba(0,0,0,.35)); }
+.bar{ position:absolute; left:0; top:0; width:100%; height:100%; overflow:visible; }
+.bar path{ fill:var(--bar); }
+.item{
+  position:absolute; top:0; height:100%; border:0; background:none; padding:0;
+  color:var(--ink); cursor:pointer; overflow:hidden; -webkit-tap-highlight-color:transparent;
+}
+.item svg{ position:absolute; left:50%; top:21px; width:24px; height:24px; margin-left:-12px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; transition:transform var(--dur) var(--ease), opacity .3s; }
+.item .label{ position:absolute; left:0; right:0; top:40px; text-align:center; font-size:14px; font-weight:500; transform:translateY(26px); opacity:0; transition:transform var(--dur) var(--ease), opacity .3s; }
+.item.on svg{ transform:translateY(-30px); opacity:0; }
+.item.on .label{ transform:translateY(0); opacity:1; transition-delay:.12s; }
+.item:focus-visible{ outline:2px solid var(--disc); outline-offset:-4px; border-radius:12px; }
+.disc{
+  position:absolute; top:-26px; left:0; width:56px; height:56px; border-radius:50%;
+  background:var(--disc); color:var(--disc-ink); overflow:hidden; pointer-events:none;
+}
+.disc svg{ position:absolute; left:50%; top:50%; width:24px; height:24px; margin:-12px 0 0 -12px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; transform:translateY(42px); opacity:0; transition:transform var(--dur) var(--ease), opacity .25s; }
+.disc svg.on{ transform:translateY(0); opacity:1; transition-delay:.1s; }
+.pages{ max-width:420px; margin:0 auto; padding:20px 14px 130px; }
+.brand{ display:flex; align-items:center; gap:10px; margin-bottom:18px; }
+.logo{ width:40px; height:40px; border-radius:12px; display:grid; place-items:center; background:var(--bar); color:#fff; font-weight:700; font-size:20px; box-shadow:0 6px 12px rgba(0,0,0,.25); }
+.brand b{ display:block; font-size:16px; line-height:1.2; }
+.brand small{ font-size:12px; opacity:.75; }
+.page{ display:none; }
+.page.on{ display:block; }
+.page h1{ margin:0 0 2px; font-size:22px; font-weight:700; }
+.sub{ margin:0 0 14px; font-size:13px; opacity:.8; }
+.head{ color:#0f0f1c; }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .head{ color:#fff; } }
+:root[data-theme="dark"] .head{ color:#fff; }
+@keyframes in{ from{ opacity:0; transform:translateY(14px); } to{ opacity:1; transform:none; } }
+.card{ --ac:#fff; background:linear-gradient(160deg,color-mix(in srgb,var(--bar) 86%,#fff),var(--bar)); border:1px solid rgba(255,255,255,.07); color:#fff; border-radius:16px; padding:12px; margin-bottom:10px; box-shadow:0 8px 16px rgba(0,0,0,.2); animation:in var(--dur) var(--ease) both; animation-delay:calc(var(--n)*70ms); }
+.row{ display:flex; align-items:center; gap:12px; }
+.ico{ flex:none; width:42px; height:42px; border-radius:12px; display:grid; place-items:center; background:color-mix(in srgb,var(--ac) 18%,transparent); color:var(--ac); }
+.ico svg{ width:22px; height:22px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.txt{ flex:1; min-width:0; }
+.card h2{ margin:0; font-size:15px; font-weight:600; }
+.val{ margin:2px 0 0; font-size:13px; opacity:.7; text-align:right; overflow-wrap:anywhere; }
+.btns.two{ display:flex; gap:8px; margin-top:10px; }
+.btns.two .btn{ flex:1; }
+.btn{ flex:none; display:block; box-sizing:border-box; text-align:center; background:var(--ac); color:#fff; font:inherit; font-weight:600; font-size:13px; padding:8px 14px; border-radius:10px; border:1px solid transparent; text-decoration:none; cursor:pointer; white-space:nowrap; transition:transform .15s; }
+.btn.ghost{ background:transparent; border-color:rgba(255,255,255,.25); }
+.btn:active{ transform:scale(.97); }
+.btn:focus-visible{ outline:2px solid #fff; outline-offset:2px; }
+/* ---- liquid glass ---- */
+body{ background:radial-gradient(60% 40% at 15% 8%,#ff7ab8 0,transparent 70%) fixed,radial-gradient(55% 40% at 92% 22%,#5ac8fa 0,transparent 70%) fixed,radial-gradient(70% 45% at 75% 98%,#ffb347 0,transparent 70%) fixed,radial-gradient(60% 50% at 8% 88%,#7c5cff 0,transparent 70%) fixed,#3a2f8f; }
+.nav{ filter:none; }
+.glass{ position:absolute; inset:0; background:linear-gradient(180deg,rgba(255,255,255,.3),rgba(255,255,255,.1)); -webkit-backdrop-filter:blur(22px) saturate(180%); backdrop-filter:blur(22px) saturate(180%); }
+.bar{ pointer-events:none; }
+.bar path{ fill:none; stroke:url(#lg); stroke-width:1.2; }
+.item .label{ text-shadow:0 1px 3px rgba(0,0,0,.3); }
+.item svg{ filter:drop-shadow(0 1px 2px rgba(0,0,0,.25)); }
+.disc{ background:radial-gradient(circle at 30% 20%,rgba(255,255,255,.55),rgba(255,255,255,.12) 55%); -webkit-backdrop-filter:blur(14px) saturate(180%); backdrop-filter:blur(14px) saturate(180%); border:1px solid rgba(255,255,255,.75); box-sizing:border-box; color:#fff; box-shadow:inset 0 2px 6px rgba(255,255,255,.7),inset 0 -6px 10px rgba(255,255,255,.12),0 8px 18px rgba(30,20,80,.3); }
+.disc svg{ filter:drop-shadow(0 1px 2px rgba(0,0,0,.3)); }
+.head{ color:#fff; text-shadow:0 1px 8px rgba(30,20,80,.35); }
+.logo{ background:linear-gradient(145deg,rgba(255,255,255,.45),rgba(255,255,255,.1)); -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px); border:1px solid rgba(255,255,255,.55); box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 6px 16px rgba(30,20,80,.2); }
+.card{ background:linear-gradient(160deg,rgba(255,255,255,.26),rgba(255,255,255,.08)); -webkit-backdrop-filter:blur(20px) saturate(180%); backdrop-filter:blur(20px) saturate(180%); border:1px solid rgba(255,255,255,.38); box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 10px 28px rgba(40,20,90,.22); }
+.ico{ background:linear-gradient(145deg,color-mix(in srgb,var(--ac) 75%,transparent),color-mix(in srgb,var(--ac) 35%,transparent)); color:#fff; border:1px solid rgba(255,255,255,.45); box-shadow:inset 0 1px 0 rgba(255,255,255,.5); }
+.btn{ background:color-mix(in srgb,var(--ac) 62%,transparent); border:1px solid rgba(255,255,255,.45); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); box-shadow:inset 0 1px 0 rgba(255,255,255,.5); text-shadow:0 1px 2px rgba(0,0,0,.25); }
+.btn.ghost{ background:rgba(255,255,255,.14); }
+@media (prefers-reduced-motion: reduce){ :root{ --dur:.01s; } }
+</style>
+</head>
+<body>
+<main class="pages" id="pages" dir="rtl"></main>
+<nav class="nav" id="nav" aria-label="Main">
+  <div class="glass" id="glass"></div>
+  <svg class="bar" id="bar" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity=".18"/></linearGradient></defs><path id="shape"/></svg>
+  <div class="disc" id="disc"></div>
+</nav>
+<script>
+const items=[
+  {name:"whatsapp",svg:'<path fill="currentColor" stroke="none" d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.47-2.4-1.48a9 9 0 0 1-1.65-2.06c-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.7.63.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.18-1.41-.07-.13-.27-.2-.57-.35zM12.05 21.78a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.82 9.82 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.89 9.88zm8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.69 1.45c6.55 0 11.89-5.34 11.89-11.9 0-3.17-1.23-6.15-3.48-8.41z"/>'},
+  {name:"call",svg:'<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/>'},
+  {name:"profiles",svg:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/>'},
+  {name:"location",svg:'<path d="M12 21s7-6.2 7-11.5a7 7 0 0 0-14 0C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>'},
+  {name:"pay",svg:'<rect x="2.5" y="5" width="19" height="14" rx="3"/><path d="M2.5 10h19M6.5 15h4"/>'}
+];
+
+const nav = document.getElementById("nav");
+const bar = document.getElementById("bar");
+const shape = document.getElementById("shape");
+const disc = document.getElementById("disc");
+const glass = document.getElementById("glass");
+
+const H = 66, R = 16, P = 30, RC = 33, F = 10, CY = 2, DUR = 550;
+const svg = p => '<svg viewBox="0 0 24 24" aria-hidden="true">' + p + '</svg>';
+const btns = [], discIcons = [];
+let W = 0, w = 0, cur = 0, cx = 0, raf = 0;
+
+items.forEach((it, i) => {
+  const b = document.createElement("button");
+  b.className = "item";
+  b.setAttribute("aria-label", it.name);
+  b.innerHTML = svg(it.svg) + '<span class="label">' + it.name + '</span>';
+  b.addEventListener("click", () => select(i));
+  nav.appendChild(b);
+  btns.push(b);
+  disc.insertAdjacentHTML("beforeend", svg(it.svg));
+});
+
+[...disc.children].forEach(s => discIcons.push(s));
+
+const pages = [
+  { h: 'واتساب', p: 'تواصل معنا مباشرة على واتساب', cards: [
+    { t: 'واتساب للتواصل', s: '01143298437', b: [['ابدأ المحادثة', 'https://wa.me/201143298437']] }
+  ]},
+  { h: 'اتصال', p: 'اتصل بنا مباشرة', cards: [
+    { t: 'رقم الاتصال', s: '+20 114 329 8437', b: [['اتصل الآن', 'tel:+201143298437']] }
+  ]},
+  { h: 'صفحاتنا', p: 'تابعنا على السوشيال ميديا', cards: [
+    { t: 'فيسبوك', b: [['افتح الصفحة', 'https://www.facebook.com/share/1JymU3QfNJ/']] },
+    { t: 'تيك توك', b: [['افتح الحساب', 'https://tiktok.com/@baraka519']] },
+    { t: 'انستجرام', b: [['افتح الحساب', 'https://www.instagram.com/yassermohamed432?xtok=cmE3ZXpxeGJpaHF4']] }
+  ]},
+  { h: 'الموقع', p: 'تعالى زورنا', cards: [
+    { t: 'العنوان', s: 'أسوان كورنيش النيل الشارع الجديد', b: [['افتح على خرائط جوجل', 'https://goo.gl/maps/yqZnkxEQUQyxvxGR9']] }
+  ]},
+  { h: 'الدفع', p: 'اختر طريقة الدفع المناسبة', cards: [
+    { t: 'فودافون كاش', s: 'محفظة: 01030365646', b: [['نسخ رقم المحفظة', 'copy:01030365646']] },
+    { t: 'انستا باي', s: 'Instant Payment Network', b: [['الدفع عبر انستاباي', 'https://ipn.eg/S/yasser1241/instapay/4PxAKc']] }
+  ]}
+];
+
+const pagesEl = document.getElementById('pages'), pageEls = [];
+const soc = [
+  '<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>',
+  '<path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M14 3c.4 2.6 2.1 4.2 5 4.4"/>',
+  '<rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/>'
+];
+const acc = [['#25D366'],['#3b82f6'],['#1877F2','#ff3b5c','#E1306C'],['#ef4444'],['#ef4444','#6b21a8']];
+
+const createBtn = b => {
+  if (b[1].startsWith('copy:')) {
+    return '<button class="btn ghost" data-copy="' + b[1].slice(5) + '">' + b[0] + '</button>';
+  } else {
+    return '<a class="btn" href="' + b[1] + '"' + (b[1].startsWith('tel:') ? '' : ' target="_blank" rel="noopener"') + '>' + b[0] + '</a>';
+  }
+};
+
+pagesEl.innerHTML = '<header class="brand"><span class="logo">Y</span><div class="head"><b>Yasser Mohamed</b><small>أسوان</small></div></header>';
+
+pages.forEach((pg, pi) => {
+  const s = document.createElement('section');
+  s.className = 'page';
+  s.innerHTML = '<h1 class="head">' + pg.h + '</h1><p class="sub head">' + pg.p + '</p>' + pg.cards.map((c, ci) => {
+    const one = c.b.length === 1;
+    const btnHtml = one ? createBtn(c.b[0]) : '';
+    const multiBtnsHtml = one ? '' : '<div class="btns two">' + c.b.map(createBtn).join('') + '</div>';
+    const iconSvg = pi === 2 ? soc[ci] : items[pi].svg;
+    const colorVal = (acc[pi] && acc[pi][ci]) ? acc[pi][ci] : '#fff';
+    
+    return '<div class="card" style="--ac:' + colorVal + ';--n:' + ci + '"><div class="row"><span class="ico">' + svg(iconSvg) + '</span><div class="txt"><h2>' + c.t + '</h2>' + (c.s ? '<p class="val" dir="auto">' + c.s + '</p>' : '') + '</div>' + btnHtml + '</div>' + multiBtnsHtml + '</div>';
+  }).join('');
+  pagesEl.appendChild(s);
+  pageEls.push(s);
+});
+
+pagesEl.addEventListener('click', e => {
+  const b = e.target.closest('[data-copy]');
+  if (!b) return;
+  const v = b.dataset.copy, old = b.textContent;
+  const done = () => { b.textContent = 'تم النسخ'; setTimeout(() => { b.textContent = old; }, 1500); };
+  const fallback = () => { const t = document.createElement('textarea'); t.value = v; document.body.appendChild(t); t.select(); try { document.execCommand('copy'); } catch (_) {} t.remove(); done(); };
+  try { navigator.clipboard.writeText(v).then(done, fallback); } catch (_) { fallback(); }
+});
+
+const cxFor = i => P + w * (i + .5);
+
+function draw(c) {
+  cx = c;
+  const dx = Math.sqrt((RC + F) ** 2 - (F - CY) ** 2), k = RC / (RC + F);
+  const tx = dx * k, ty = CY + (F - CY) * k;
+  const d = 
+    `M${R},0 L${c - dx},0 A${F},${F} 0 0 1 ${c - tx},${ty} A${RC},${RC} 0 0 0 ${c + tx},${ty} A${F},${F} 0 0 1 ${c + dx},0 ` +
+    `L${W - R},0 Q${W},0 ${W},${R} L${W},${H - R} Q${W},${H} ${W - R},${H} L${R},${H} Q0,${H} 0,${H - R} L0,${R} Q0,0 ${R},0 Z`;
+  shape.setAttribute("d", d);
+  glass.style.clipPath = glass.style.webkitClipPath = "path('" + d + "')";
+  disc.style.transform = `translateX(${c - 28}px)`;
+}
+
+function layout() {
+  W = nav.clientWidth;
+  if (!W) return;
+  w = (W - 2 * P) / 5;
+  bar.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  btns.forEach((b, i) => {
+    b.style.left = (P + w * i) + "px";
+    b.style.width = w + "px";
+  });
+  draw(cxFor(cur));
+}
+
+const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+function select(i, instant) {
+  cur = i;
+  btns.forEach((b, k) => {
+    b.classList.toggle("on", k === i);
+    b.setAttribute("aria-current", k === i ? "page" : "false");
+  });
+  discIcons.forEach((s, k) => s.classList.toggle("on", k === i));
+  pageEls.forEach((p, k) => p.classList.toggle("on", k === i));
+  cancelAnimationFrame(raf);
+  const from = cx, to = cxFor(i);
+  const dur = (instant || matchMedia("(prefers-reduced-motion: reduce)").matches) ? 0 : DUR;
+  if (!dur) { draw(to); return; }
+  const t0 = performance.now();
+  const step = now => {
+    const t = Math.min((now - t0) / dur, 1);
+    draw(from + (to - from) * ease(t));
+    if (t < 1) raf = requestAnimationFrame(step);
+  };
+  raf = requestAnimationFrame(step);
+}
+
+window.addEventListener('load', () => {
+  layout();
+  select(0, true);
+});
+addEventListener("resize", layout);
+</script>
+</body>
+</html>
