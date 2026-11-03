@@ -3,19 +3,1048 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>Liquid Glass Hub - منصة التواصل والدفع</title>
+    <title>Yasser Mohamed - Liquid Glass Hub | منصة التواصل والدفع</title>
     <meta name="description" content="منصة تفاعلية بتصميم زجاجي سائل فاخر (Liquid Glass) مع شريط تنقل ذكي وصفحات مخصصة لوسائل التواصل والدفع الإلكتروني." />
-    <meta property="og:title" content="Liquid Glass Hub - منصة التواصل والدفع" />
-    <meta property="og:description" content="منصة تفاعلية بتصميم زجاجي سائل فاخر (Liquid Glass) مع شريط تنقل ذكي وصفحات مخصصة لوسائل التواصل والدفع الإلكتروني." />
+    <meta property="og:title" content="Yasser Mohamed - Liquid Glass Hub" />
+    <meta property="og:description" content="منصة التواصل المباشر وبوابة الدفع اللحظي (إنستاباي وفودافون كاش)" />
     <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
+    
+    <!-- Google Fonts: Cairo -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    
+    <!-- Tailwind CSS CDN (Single-file standalone compatibility) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Cairo', 'sans-serif'],
+            },
+            colors: {
+              brand: {
+                blue: '#0a58ff',
+                fb: '#1877F2',
+                wa: '#25D366',
+                tt: '#ff0050',
+                pay: '#0a58ff',
+              }
+            }
+          }
+        }
+      }
+    </script>
+
+    <style>
+      :root {
+        --ink: rgba(255, 255, 255, 0.95);
+        --ink-dim: rgba(255, 255, 255, 0.74);
+        --blue: #0a58ff;
+      }
+
+      * {
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      body {
+        font-family: "Cairo", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+        background-color: #080d21;
+        color: #ffffff;
+      }
+
+      /* Liquid Glassmorphism Core */
+      .glass-panel {
+        position: relative;
+        background: rgba(255, 255, 255, 0.08);
+        -webkit-backdrop-filter: blur(20px) saturate(190%) brightness(1.08);
+        backdrop-filter: blur(20px) saturate(190%) brightness(1.08);
+        box-shadow:
+          inset 1.5px 1.5px 0 rgba(255, 255, 255, 0.35),
+          inset -1px -1px 0 rgba(255, 255, 255, 0.1),
+          inset 0 0 24px rgba(255, 255, 255, 0.06),
+          0 16px 40px rgba(5, 12, 35, 0.45),
+          0 2px 8px rgba(5, 12, 35, 0.25);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+      }
+
+      .glass-panel-heavy {
+        position: relative;
+        background: rgba(14, 23, 58, 0.72);
+        -webkit-backdrop-filter: blur(24px) saturate(200%) brightness(1.1);
+        backdrop-filter: blur(24px) saturate(200%) brightness(1.1);
+        box-shadow:
+          inset 1.5px 1.5px 0 rgba(255, 255, 255, 0.35),
+          inset -1px -1px 0 rgba(255, 255, 255, 0.1),
+          0 24px 50px rgba(4, 9, 28, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+      }
+
+      .glass-dock {
+        position: relative;
+        background: rgba(255, 255, 255, 0.14);
+        -webkit-backdrop-filter: blur(16px) saturate(190%) brightness(1.08);
+        backdrop-filter: blur(16px) saturate(190%) brightness(1.08);
+        box-shadow:
+          inset 1.5px 1.5px 0 rgba(255, 255, 255, 0.65),
+          inset -1px -1px 0 rgba(255, 255, 255, 0.22),
+          inset 0 0 22px rgba(255, 255, 255, 0.14),
+          0 14px 36px rgba(10, 20, 60, 0.4),
+          0 2px 6px rgba(10, 20, 60, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.22);
+      }
+
+      .glass-dock::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        background:
+          radial-gradient(120% 90% at 20% 0%, rgba(255, 255, 255, 0.38), transparent 45%),
+          linear-gradient(180deg, rgba(255, 255, 255, 0.12), transparent 40%, rgba(255, 255, 255, 0.06));
+        mix-blend-mode: soft-light;
+      }
+
+      /* Liquid Bubble Indicator */
+      .liquid-bubble {
+        position: absolute;
+        top: 6px;
+        bottom: 6px;
+        border-radius: 9999px;
+        pointer-events: none;
+        z-index: 0;
+        transition: left 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), width 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.25s ease;
+        background:
+          radial-gradient(130% 120% at 30% 0%, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0) 55%),
+          linear-gradient(180deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.16));
+        -webkit-backdrop-filter: blur(4px) saturate(230%) brightness(1.22);
+        backdrop-filter: blur(4px) saturate(230%) brightness(1.22);
+        box-shadow:
+          inset 2px 2px 1px -1px rgba(255, 255, 255, 0.95),
+          inset -2px -2px 1px -1px rgba(255, 255, 255, 0.75),
+          inset 0 0 0 1px rgba(255, 255, 255, 0.25),
+          inset 0 0 14px 2px rgba(255, 255, 255, 0.32),
+          inset 0 -10px 16px -6px rgba(255, 255, 255, 0.25),
+          0 8px 18px -4px rgba(10, 20, 60, 0.35);
+      }
+
+      /* Ambient floating gradient blobs */
+      .scene-bg {
+        position: fixed;
+        inset: 0;
+        overflow: hidden;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .blob {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(48px);
+        opacity: 0.8;
+        animation: drift 16s ease-in-out infinite alternate;
+        will-change: transform;
+      }
+
+      .b1 {
+        width: 48vmax;
+        height: 48vmax;
+        left: -12vmax;
+        top: -14vmax;
+        background: radial-gradient(circle, #ff2d78 0%, rgba(255, 45, 120, 0) 70%);
+      }
+
+      .b2 {
+        width: 44vmax;
+        height: 44vmax;
+        right: -14vmax;
+        top: 8vmax;
+        background: radial-gradient(circle, #2563eb 0%, rgba(37, 99, 235, 0) 70%);
+        animation-delay: -4s;
+      }
+
+      .b3 {
+        width: 40vmax;
+        height: 40vmax;
+        left: 22vmax;
+        bottom: -18vmax;
+        background: radial-gradient(circle, #f59e0b 0%, rgba(245, 158, 11, 0) 70%);
+        animation-delay: -8s;
+      }
+
+      .b4 {
+        width: 32vmax;
+        height: 32vmax;
+        left: 6vmax;
+        bottom: 8vmax;
+        background: radial-gradient(circle, #10b981 0%, rgba(16, 185, 129, 0) 70%);
+        animation-delay: -2s;
+      }
+
+      @keyframes drift {
+        0% { transform: translate(0, 0) scale(1); }
+        50% { transform: translate(4vmax, -3vmax) scale(1.08); }
+        100% { transform: translate(6vmax, -5vmax) scale(1.15); }
+      }
+
+      .dir-ltr { direction: ltr; }
+      .dir-rtl { direction: rtl; }
+
+      /* Animation for section transitions */
+      .fade-enter {
+        animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(8px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      /* Custom scrollbar */
+      ::-webkit-scrollbar { width: 6px; }
+      ::-webkit-scrollbar-track { background: rgba(10, 16, 38, 0.4); }
+      ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 9999px; }
+    </style>
   </head>
-  <body class="bg-[#080d21] text-white antialiased selection:bg-blue-600 selection:text-white">
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+  <body class="selection:bg-blue-600 selection:text-white">
+
+    <!-- Ambient Glowing Blobs -->
+    <div class="scene-bg">
+      <div class="blob b1"></div>
+      <div class="blob b2"></div>
+      <div class="blob b3"></div>
+      <div class="blob b4"></div>
+      <div class="absolute inset-0 bg-[#080d21]/60 backdrop-blur-[40px]"></div>
+    </div>
+
+    <!-- Main App Container -->
+    <div class="relative z-10 min-h-screen flex flex-col justify-between">
+      
+      <!-- Top Header Bar -->
+      <header class="sticky top-0 z-30 w-full px-4 sm:px-8 py-3.5 border-b border-white/10 bg-slate-950/40 backdrop-blur-xl">
+        <div class="max-w-5xl mx-auto flex items-center justify-between gap-4">
+          <!-- Brand Logo & Name -->
+          <button type="button" onclick="switchTab('home')" class="flex items-center gap-2.5 text-right group outline-none cursor-pointer">
+            <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white font-extrabold text-xs shadow-md group-hover:scale-105 transition-transform font-sans tracking-tight">
+              YM
+            </div>
+            <div>
+              <span class="font-extrabold text-sm sm:text-base text-white tracking-tight block">
+                Yasser Mohamed
+              </span>
+              <span class="text-[10px] text-white/60 block -mt-0.5">
+                Liquid Glass Navigation Hub
+              </span>
+            </div>
+          </button>
+
+          <!-- Status Badge -->
+          <div class="flex items-center gap-1.5 text-xs text-white/70">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span>متصل الآن</span>
+            </span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Content View -->
+      <main class="relative z-10 flex-1 w-full px-4 sm:px-6 pt-6 sm:pt-8 pb-32 sm:pb-36">
+
+        <!-- ================= TAB: HOME ================= -->
+        <section id="tab-home" class="tab-pane w-full max-w-4xl mx-auto space-y-6 sm:space-y-8 fade-enter">
+          <!-- Hero Profile Card -->
+          <div class="glass-panel rounded-3xl p-6 sm:p-8 relative overflow-hidden">
+            <div class="absolute -top-16 -left-16 w-48 h-48 bg-blue-500/20 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-16 -right-16 w-48 h-48 bg-pink-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="relative z-10 flex flex-col md:flex-row items-center md:items-start gap-6 text-center md:text-right">
+              <!-- Avatar -->
+              <div class="relative shrink-0">
+                <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl glass-dock p-1 shadow-2xl flex items-center justify-center bg-gradient-to-tr from-blue-600/30 via-indigo-600/20 to-purple-600/30">
+                  <div class="w-full h-full rounded-xl bg-gradient-to-br from-blue-600 to-indigo-800 flex items-center justify-center text-white font-extrabold text-3xl shadow-inner font-sans tracking-tight">
+                    YM
+                  </div>
+                </div>
+                <span class="absolute -bottom-1 -right-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/90 text-white shadow-lg flex items-center gap-1">
+                  <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                  متصل
+                </span>
+              </div>
+
+              <!-- Profile Details -->
+              <div class="flex-1 space-y-3">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div>
+                    <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight flex items-center justify-center md:justify-start gap-2">
+                      <span>Yasser Mohamed</span>
+                      <svg class="w-6 h-6 text-blue-400 shrink-0 inline-block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        <path d="m9 12 2 2 4-4"/>
+                      </svg>
+                    </h1>
+                    <p class="text-white/70 text-sm sm:text-base mt-1">
+                      الحساب الرسمي • قنوات التواصل الرسمية وبوابة التحويل السريع
+                    </p>
+                  </div>
+
+                  <!-- Share & QR Buttons -->
+                  <div class="flex items-center justify-center gap-2">
+                    <button type="button" onclick="handleShare()" class="px-3.5 py-2 rounded-xl glass-dock text-xs sm:text-sm font-semibold text-white/90 hover:text-white flex items-center gap-1.5 active:scale-95 transition-all cursor-pointer">
+                      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+                        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                      </svg>
+                      <span id="share-btn-text">مشاركة</span>
+                    </button>
+
+                    <button type="button" onclick="toggleQR()" class="p-2 rounded-xl glass-dock text-white/90 hover:text-white active:scale-95 transition-all cursor-pointer" title="رمز QR">
+                      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect width="5" height="5" x="3" y="3" rx="1"/><rect width="5" height="5" x="16" y="3" rx="1"/>
+                        <rect width="5" height="5" x="3" y="16" rx="1"/><path d="M21 16h-3a2 2 0 0 0-2 2v3"/>
+                        <path d="M21 21v.01"/><path d="M12 7v3a2 2 0 0 1-2 2H7"/><path d="M3 12h.01"/><path d="M12 3h.01"/><path d="M12 16v.01"/><path d="M16 12h1"/><path d="M21 12v.01"/><path d="M12 21v-1"/>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Badges -->
+                <div class="flex flex-wrap items-center justify-center md:justify-start gap-2 pt-1 text-xs text-white/80">
+                  <span class="px-3 py-1 rounded-lg bg-white/10 backdrop-blur-sm border border-white/10 flex items-center gap-1.5">
+                    <span class="text-amber-400">⚡</span>
+                    استجابة فورية
+                  </span>
+                  <span class="px-3 py-1 rounded-lg bg-white/10 backdrop-blur-sm border border-white/10 flex items-center gap-1.5">
+                    <span class="text-blue-400">💳</span>
+                    تحويل إنستاباي ومحافظ
+                  </span>
+                  <span class="px-3 py-1 rounded-lg bg-white/10 backdrop-blur-sm border border-white/10 flex items-center gap-1.5">
+                    <span class="text-pink-400">✨</span>
+                    تيك توك وفيسبوك
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- QR Modal Display -->
+            <div id="qr-panel" class="hidden mt-6 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 bg-black/20 p-4 rounded-2xl">
+              <div class="flex items-center gap-4">
+                <div class="w-20 h-20 bg-white p-2 rounded-xl shrink-0 flex items-center justify-center">
+                  <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://baraka-340.github.io/contact-me/" alt="QR Code" class="w-full h-full" />
+                </div>
+                <div class="text-right">
+                  <h4 class="text-sm font-bold text-white">امسح الرمز بكاميرا هاتفك</h4>
+                  <p class="text-xs text-white/70 mt-0.5">افتح المنصة على أي هاتف فوراً أو شاركها مع الأصدقاء</p>
+                </div>
+              </div>
+              <button type="button" onclick="toggleQR()" class="text-xs text-white/60 hover:text-white px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 cursor-pointer">
+                إغلاق
+              </button>
+            </div>
+          </div>
+
+          <!-- Section Cards Grid -->
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                <span>الأقسام الرئيسية وبوابات الانتقال</span>
+              </h2>
+              <span class="text-xs text-white/60">اضغط على أي قسم للاطلاع على التفاصيل والزر المباشر</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              
+              <!-- Card 1: Facebook -->
+              <div class="glass-panel rounded-2xl p-5 hover:border-blue-500/40 transition-all duration-300 group flex flex-col justify-between gap-4">
+                <div class="flex items-start justify-between gap-3">
+                  <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-xl bg-blue-600/20 text-[#3b82f6] border border-blue-500/30 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                        <path d="M14 8h3V4.5h-3A4.5 4.5 0 0 0 9.5 9v2H7v3.5h2.5V22H13v-7.5h3l.5-3.5H13V9.2c0-.7.3-1.2 1-1.2z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 class="font-bold text-white text-base group-hover:text-blue-400 transition-colors">
+                        صفحة فيسبوك الرسمية
+                      </h3>
+                      <p class="text-xs text-white/70 mt-0.5">
+                        متابعة المنشورات، التحديثات والمجتمع التفاعلي
+                      </p>
+                    </div>
+                  </div>
+                  <span class="text-[11px] px-2 py-0.5 rounded-md bg-blue-500/10 text-blue-300 border border-blue-500/20">فيسبوك</span>
+                </div>
+
+                <div class="flex items-center gap-2 pt-2 border-t border-white/10">
+                  <button type="button" onclick="switchTab('facebook')" class="flex-1 py-2 px-3 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer">
+                    <span>عرض قسم فيسبوك</span>
+                    <span>←</span>
+                  </button>
+                  <a href="https://www.facebook.com/share/1JymU3QfNJ/" target="_blank" rel="noopener noreferrer" class="py-2 px-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold flex items-center gap-1.5 shadow-md shadow-blue-600/30 active:scale-95 transition-all">
+                    <span>انتقال</span>
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Card 2: WhatsApp -->
+              <div class="glass-panel rounded-2xl p-5 hover:border-emerald-500/40 transition-all duration-300 group flex flex-col justify-between gap-4">
+                <div class="flex items-start justify-between gap-3">
+                  <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-600/20 text-[#22c55e] border border-emerald-500/30 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                        <path fill-rule="evenodd" d="M12 2.5a9.5 9.5 0 0 0-8.2 14.3L2.5 21.5l4.8-1.26A9.5 9.5 0 1 0 12 2.5zM8.7 7.4c.3-.3.7-.3.9-.1l1 1.6c.1.2.1.4 0 .6l-.5.7c.6 1.1 1.5 2 2.7 2.6l.7-.6c.2-.2.4-.2.6-.1l1.7 1c.2.2.2.5 0 .9-.5.9-1.5 1.3-2.5 1-2.8-.8-5-3-5.7-5.6-.2-.9.2-1.7 1.1-2z"/>
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 class="font-bold text-white text-base group-hover:text-emerald-400 transition-colors">
+                        محادثة واتساب الفورية
+                      </h3>
+                      <p class="text-xs text-white/70 mt-0.5">
+                        تواصل مباشر وسريع على الرقم 01143298437
+                      </p>
+                    </div>
+                  </div>
+                  <span class="text-[11px] px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">رد سريع</span>
+                </div>
+
+                <div class="flex items-center gap-2 pt-2 border-t border-white/10">
+                  <button type="button" onclick="switchTab('whatsapp')" class="flex-1 py-2 px-3 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer">
+                    <span>عرض قسم واتساب</span>
+                    <span>←</span>
+                  </button>
+                  <a href="https://wa.me/201143298437" target="_blank" rel="noopener noreferrer" class="py-2 px-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold flex items-center gap-1.5 shadow-md shadow-emerald-600/30 active:scale-95 transition-all">
+                    <span>محادثة</span>
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Card 3: TikTok -->
+              <div class="glass-panel rounded-2xl p-5 hover:border-pink-500/40 transition-all duration-300 group flex flex-col justify-between gap-4">
+                <div class="flex items-start justify-between gap-3">
+                  <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-xl bg-pink-600/20 text-[#ff3366] border border-pink-500/30 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                        <path d="M16.6 2.5h-3.3v12.4a2.5 2.5 0 1 1-2.5-2.5c.3 0 .5 0 .8.1V9.1a5.8 5.8 0 1 0 5 5.8V8.8c1.1.9 2.5 1.4 4 1.4V6.9c-2.1 0-3.7-1.7-4-4.4z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 class="font-bold text-white text-base group-hover:text-pink-400 transition-colors">
+                        حساب تيك توك
+                      </h3>
+                      <p class="text-xs text-white/70 mt-0.5">
+                        مقاطع وشروحات تقنية مميزة (@baraka519)
+                      </p>
+                    </div>
+                  </div>
+                  <span class="text-[11px] px-2 py-0.5 rounded-md bg-pink-500/10 text-pink-300 border border-pink-500/20">فيديوهات</span>
+                </div>
+
+                <div class="flex items-center gap-2 pt-2 border-t border-white/10">
+                  <button type="button" onclick="switchTab('tiktok')" class="flex-1 py-2 px-3 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer">
+                    <span>عرض قسم تيك توك</span>
+                    <span>←</span>
+                  </button>
+                  <a href="https://www.tiktok.com/@baraka519" target="_blank" rel="noopener noreferrer" class="py-2 px-3.5 rounded-xl bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 text-white text-xs font-bold flex items-center gap-1.5 shadow-md shadow-pink-600/30 active:scale-95 transition-all">
+                    <span>مشاهدة</span>
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Card 4: Payment -->
+              <div class="glass-panel rounded-2xl p-5 hover:border-blue-400/50 transition-all duration-300 group flex flex-col justify-between gap-4">
+                <div class="flex items-start justify-between gap-3">
+                  <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-xl bg-blue-600/20 text-[#3b82f6] border border-blue-400/30 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <svg class="w-6 h-6 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/>
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 class="font-bold text-white text-base group-hover:text-blue-300 transition-colors">
+                        بوابة الدفع والتحويل اللحظي
+                      </h3>
+                      <p class="text-xs text-white/70 mt-0.5">
+                        إنستاباي (InstaPay) ومحفظة فودافون كاش
+                      </p>
+                    </div>
+                  </div>
+                  <span class="text-[11px] px-2 py-0.5 rounded-md bg-blue-500/20 text-blue-200 border border-blue-400/30 font-bold">تحويل لحظي</span>
+                </div>
+
+                <div class="flex items-center gap-2 pt-2 border-t border-white/10">
+                  <button type="button" onclick="switchTab('pay')" class="flex-1 py-2 px-3 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer">
+                    <span>عرض تفاصيل الدفع</span>
+                    <span>←</span>
+                  </button>
+                  <a href="https://ipn.eg/S/yasser1241/instapay/4PxAKc" target="_blank" rel="noopener noreferrer" class="py-2 px-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold flex items-center gap-1.5 shadow-md shadow-blue-600/30 active:scale-95 transition-all">
+                    <span>إنستاباي</span>
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                  </a>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= TAB: FACEBOOK ================= -->
+        <section id="tab-facebook" class="tab-pane hidden w-full max-w-3xl mx-auto space-y-6 fade-enter">
+          <div class="flex items-center justify-between">
+            <button type="button" onclick="switchTab('home')" class="text-xs text-white/70 hover:text-white flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 transition-colors cursor-pointer">
+              <span>→</span>
+              <span>العودة للرئيسية</span>
+            </button>
+            <span class="text-xs text-blue-400 font-semibold px-2.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/20">
+              Facebook Official Page
+            </span>
+          </div>
+
+          <div class="glass-panel-heavy rounded-3xl p-6 sm:p-8 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-blue-600/15 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="relative z-10 space-y-6">
+              <div class="flex flex-col sm:flex-row items-center sm:items-start gap-5 text-center sm:text-right">
+                <div class="w-20 h-20 sm:w-22 sm:h-22 rounded-2xl bg-[#1877F2]/20 border border-[#1877F2]/40 text-[#1877F2] flex items-center justify-center p-3 shadow-xl shrink-0">
+                  <svg class="w-12 h-12 fill-current" viewBox="0 0 24 24">
+                    <path d="M14 8h3V4.5h-3A4.5 4.5 0 0 0 9.5 9v2H7v3.5h2.5V22H13v-7.5h3l.5-3.5H13V9.2c0-.7.3-1.2 1-1.2z" />
+                  </svg>
+                </div>
+
+                <div class="flex-1 space-y-1.5">
+                  <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2">
+                    <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                      الصفحة الرسمية على فيسبوك
+                    </h1>
+                    <svg class="w-6 h-6 text-blue-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+                  </div>
+                  <p class="text-white/70 text-sm sm:text-base leading-relaxed">
+                    انضم لمجتمعنا على فيسبوك لمتابعة أحدث المنشورات، التحديثات التقنية اليومية، والتواصل مع المتابعين.
+                  </p>
+                  <div class="text-xs text-blue-300 font-mono pt-1 break-all dir-ltr text-center sm:text-right select-all">
+                    https://www.facebook.com/share/1JymU3QfNJ/
+                  </div>
+                </div>
+              </div>
+
+              <!-- Main Action Transfer Button -->
+              <div class="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-blue-900/40 via-blue-800/30 to-indigo-900/40 border border-blue-500/30 space-y-3">
+                <div class="text-center sm:text-right">
+                  <h3 class="text-sm font-bold text-white flex items-center justify-center sm:justify-start gap-1.5">
+                    <span>✨</span>
+                    <span>زر الانتقال المباشر لصفحة الفيسبوك</span>
+                  </h3>
+                  <p class="text-xs text-white/70 mt-1">
+                    انقر هنا لفتح التطبيق أو المتصفح مباشرة والانتقال للحساب
+                  </p>
+                </div>
+
+                <a href="https://www.facebook.com/share/1JymU3QfNJ/" target="_blank" rel="noopener noreferrer" class="w-full py-4 px-6 rounded-xl bg-[#1877F2] hover:bg-blue-600 text-white font-bold text-base sm:text-lg flex items-center justify-center gap-3 shadow-xl shadow-blue-600/35 active:scale-[0.98] transition-all duration-200">
+                  <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M14 8h3V4.5h-3A4.5 4.5 0 0 0 9.5 9v2H7v3.5h2.5V22H13v-7.5h3l.5-3.5H13V9.2c0-.7.3-1.2 1-1.2z"/></svg>
+                  <span>الانتقال ومتابعة الصفحة الآن</span>
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                </a>
+              </div>
+
+              <!-- Secondary Actions -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                <button type="button" onclick="copyText('https://www.facebook.com/share/1JymU3QfNJ/', 'تم نسخ رابط صفحة الفيسبوك')" class="p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs sm:text-sm font-semibold text-white flex items-center justify-center gap-2 transition-all cursor-pointer">
+                  <svg class="w-4 h-4 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                  <span>نسخ رابط الصفحة</span>
+                </button>
+
+                <button type="button" onclick="handleShare()" class="p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs sm:text-sm font-semibold text-white flex items-center justify-center gap-2 transition-all cursor-pointer">
+                  <svg class="w-4 h-4 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                  <span>مشاركة الصفحة</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= TAB: WHATSAPP ================= -->
+        <section id="tab-whatsapp" class="tab-pane hidden w-full max-w-3xl mx-auto space-y-6 fade-enter">
+          <div class="flex items-center justify-between">
+            <button type="button" onclick="switchTab('home')" class="text-xs text-white/70 hover:text-white flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 transition-colors cursor-pointer">
+              <span>→</span>
+              <span>العودة للرئيسية</span>
+            </button>
+            <span class="text-xs text-emerald-400 font-semibold px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20">
+              WhatsApp Direct Chat
+            </span>
+          </div>
+
+          <div class="glass-panel-heavy rounded-3xl p-6 sm:p-8 relative overflow-hidden border border-emerald-500/30">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-emerald-600/15 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="relative z-10 space-y-6">
+              <div class="flex flex-col sm:flex-row items-center sm:items-start gap-5 text-center sm:text-right">
+                <div class="w-20 h-20 sm:w-22 sm:h-22 rounded-2xl bg-[#25D366]/20 border border-[#25D366]/40 text-[#25D366] flex items-center justify-center p-3 shadow-xl shrink-0">
+                  <svg class="w-12 h-12 fill-current" viewBox="0 0 24 24">
+                    <path fill-rule="evenodd" d="M12 2.5a9.5 9.5 0 0 0-8.2 14.3L2.5 21.5l4.8-1.26A9.5 9.5 0 1 0 12 2.5zM8.7 7.4c.3-.3.7-.3.9-.1l1 1.6c.1.2.1.4 0 .6l-.5.7c.6 1.1 1.5 2 2.7 2.6l.7-.6c.2-.2.4-.2.6-.1l1.7 1c.2.2.2.5 0 .9-.5.9-1.5 1.3-2.5 1-2.8-.8-5-3-5.7-5.6-.2-.9.2-1.7 1.1-2z"/>
+                  </svg>
+                </div>
+
+                <div class="flex-1 space-y-1.5">
+                  <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2">
+                    <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                      محادثة واتساب الرسمية
+                    </h1>
+                    <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">متاح الآن</span>
+                  </div>
+                  <p class="text-white/70 text-sm sm:text-base leading-relaxed">
+                    تواصل مباشر وفوري عبر تطبيق واتساب لطلب الخدمات، الاستفسارات، أو تأكيد المعاملات المالية.
+                  </p>
+                  <div class="text-base text-emerald-300 font-mono font-bold pt-1 dir-ltr text-center sm:text-right select-all">
+                    01143298437
+                  </div>
+                </div>
+              </div>
+
+              <!-- Message selector templates -->
+              <div class="space-y-3">
+                <label class="text-xs text-white/80 font-bold block">اختر رسالة جاهزة لبدء المحادثة فوراً:</label>
+                <div class="space-y-2">
+                  <label class="flex items-center gap-2 p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 cursor-pointer text-xs sm:text-sm text-white/90">
+                    <input type="radio" name="wa-template" value="السلام عليكم ورحمة الله، أود الاستفسار عن تفاصيل الخدمات المتاحة." checked onchange="updateWaUrl(this.value)" class="text-emerald-500" />
+                    <span>السلام عليكم ورحمة الله، أود الاستفسار عن تفاصيل الخدمات المتاحة.</span>
+                  </label>
+                  <label class="flex items-center gap-2 p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 cursor-pointer text-xs sm:text-sm text-white/90">
+                    <input type="radio" name="wa-template" value="مرحباً، قمت بعملية تحويل مالي وأود إرسال صورة الإيصال لتأكيد الاستلام." onchange="updateWaUrl(this.value)" class="text-emerald-500" />
+                    <span>مرحباً، قمت بعملية تحويل مالي وأود إرسال صورة الإيصال لتأكيد الاستلام.</span>
+                  </label>
+                  <label class="flex items-center gap-2 p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 cursor-pointer text-xs sm:text-sm text-white/90">
+                    <input type="radio" name="wa-template" value="السلام عليكم، أحتاج استشارة تقنية عاجلة، متى يكون الوقت المناسب للاتصال؟" onchange="updateWaUrl(this.value)" class="text-emerald-500" />
+                    <span>السلام عليكم، أحتاج استشارة تقنية عاجلة، متى يكون الوقت المناسب للاتصال؟</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Main WhatsApp Button -->
+              <div class="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-emerald-950/50 via-emerald-900/30 to-teal-950/50 border border-emerald-500/30 space-y-3">
+                <a id="main-wa-btn" href="https://wa.me/201143298437?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%20%D9%88%D8%B1%D8%AD%D9%85%D8%A9%20%D8%A7%D9%84%D9%84%D9%87%D8%8C%20%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%AA%D9%81%D8%A7%D8%B5%D9%8A%D9%84%20%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA%20%D8%A7%D9%84%D9%85%D8%AA%D8%A7%D8%AD%D8%A9." target="_blank" rel="noopener noreferrer" class="w-full py-4 px-6 rounded-xl bg-[#25D366] hover:bg-emerald-500 text-white font-bold text-base sm:text-lg flex items-center justify-center gap-3 shadow-xl shadow-emerald-600/35 active:scale-[0.98] transition-all duration-200">
+                  <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2.5a9.5 9.5 0 0 0-8.2 14.3L2.5 21.5l4.8-1.26A9.5 9.5 0 1 0 12 2.5zM8.7 7.4c.3-.3.7-.3.9-.1l1 1.6c.1.2.1.4 0 .6l-.5.7c.6 1.1 1.5 2 2.7 2.6l.7-.6c.2-.2.4-.2.6-.1l1.7 1c.2.2.2.5 0 .9-.5.9-1.5 1.3-2.5 1-2.8-.8-5-3-5.7-5.6-.2-.9.2-1.7 1.1-2z"/></svg>
+                  <span>بدء المحادثة الفورية على واتساب</span>
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                </a>
+              </div>
+
+              <!-- Quick action bar -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                <button type="button" onclick="copyText('01143298437', 'تم نسخ رقم الهاتف بنجاح')" class="p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs sm:text-sm font-semibold text-white flex items-center justify-center gap-2 transition-all cursor-pointer">
+                  <svg class="w-4 h-4 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                  <span>نسخ رقم الهاتف (01143298437)</span>
+                </button>
+                <a href="tel:01143298437" class="p-3 rounded-xl bg-emerald-600/20 hover:bg-emerald-600/30 border border-emerald-500/30 text-xs sm:text-sm font-semibold text-emerald-300 flex items-center justify-center gap-2 transition-all">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                  <span>اتصال هاتفي مباشر</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= TAB: TIKTOK ================= -->
+        <section id="tab-tiktok" class="tab-pane hidden w-full max-w-3xl mx-auto space-y-6 fade-enter">
+          <div class="flex items-center justify-between">
+            <button type="button" onclick="switchTab('home')" class="text-xs text-white/70 hover:text-white flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 transition-colors cursor-pointer">
+              <span>→</span>
+              <span>العودة للرئيسية</span>
+            </button>
+            <span class="text-xs text-pink-400 font-semibold px-2.5 py-1 rounded-full bg-pink-500/10 border border-pink-500/20">
+              TikTok Official Channel
+            </span>
+          </div>
+
+          <div class="glass-panel-heavy rounded-3xl p-6 sm:p-8 relative overflow-hidden border border-pink-500/30">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-pink-600/15 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="relative z-10 space-y-6">
+              <div class="flex flex-col sm:flex-row items-center sm:items-start gap-5 text-center sm:text-right">
+                <div class="w-20 h-20 sm:w-22 sm:h-22 rounded-2xl bg-gradient-to-tr from-pink-600/20 to-purple-600/20 border border-pink-500/40 text-[#ff0050] flex items-center justify-center p-3 shadow-xl shrink-0">
+                  <svg class="w-12 h-12 fill-current" viewBox="0 0 24 24">
+                    <path d="M16.6 2.5h-3.3v12.4a2.5 2.5 0 1 1-2.5-2.5c.3 0 .5 0 .8.1V9.1a5.8 5.8 0 1 0 5 5.8V8.8c1.1.9 2.5 1.4 4 1.4V6.9c-2.1 0-3.7-1.7-4-4.4z" />
+                  </svg>
+                </div>
+
+                <div class="flex-1 space-y-1.5">
+                  <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2">
+                    <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                      حساب تيك توك الرسمي
+                    </h1>
+                    <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-pink-500/20 text-pink-300 border border-pink-500/30">محتوى حصري</span>
+                  </div>
+                  <p class="text-white/70 text-sm sm:text-base leading-relaxed">
+                    تابع أحدث الفيديوهات القصيرة، الشروحات التقنية، والتغطيات الحصرية.
+                  </p>
+                  <div class="text-sm text-pink-400 font-mono font-bold pt-1 dir-ltr text-center sm:text-right select-all">
+                    @baraka519
+                  </div>
+                </div>
+              </div>
+
+              <!-- Main TikTok Button -->
+              <div class="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-pink-950/50 via-rose-900/30 to-purple-950/50 border border-pink-500/30 space-y-3">
+                <a href="https://www.tiktok.com/@baraka519" target="_blank" rel="noopener noreferrer" class="w-full py-4 px-6 rounded-xl bg-gradient-to-r from-[#ff0050] to-[#00f2fe] hover:opacity-95 text-white font-bold text-base sm:text-lg flex items-center justify-center gap-3 shadow-xl shadow-pink-600/35 active:scale-[0.98] transition-all duration-200">
+                  <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M16.6 2.5h-3.3v12.4a2.5 2.5 0 1 1-2.5-2.5c.3 0 .5 0 .8.1V9.1a5.8 5.8 0 1 0 5 5.8V8.8c1.1.9 2.5 1.4 4 1.4V6.9c-2.1 0-3.7-1.7-4-4.4z"/></svg>
+                  <span>الانتقال لمتابعة حساب تيك توك</span>
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                </a>
+              </div>
+
+              <!-- Secondary Actions -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                <button type="button" onclick="copyText('@baraka519', 'تم نسخ يوزر الحساب بنجاح')" class="p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs sm:text-sm font-semibold text-white flex items-center justify-center gap-2 transition-all cursor-pointer">
+                  <svg class="w-4 h-4 text-pink-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                  <span>نسخ اسم المستخدم (@baraka519)</span>
+                </button>
+                <button type="button" onclick="copyText('https://www.tiktok.com/@baraka519', 'تم نسخ رابط التيك توك')" class="p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs sm:text-sm font-semibold text-white flex items-center justify-center gap-2 transition-all cursor-pointer">
+                  <svg class="w-4 h-4 text-pink-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                  <span>مشاركة رابط الحساب</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= TAB: PAY ================= -->
+        <section id="tab-pay" class="tab-pane hidden w-full max-w-3xl mx-auto space-y-6 fade-enter">
+          <div class="flex items-center justify-between">
+            <button type="button" onclick="switchTab('home')" class="text-xs text-white/70 hover:text-white flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 transition-colors cursor-pointer">
+              <span>→</span>
+              <span>العودة للرئيسية</span>
+            </button>
+            <span class="text-xs text-blue-400 font-semibold px-2.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center gap-1">
+              <svg class="w-3.5 h-3.5 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+              معاملات دفع فورية وآمنة
+            </span>
+          </div>
+
+          <div class="space-y-6">
+            
+            <!-- Pay Option 1: InstaPay Card -->
+            <div class="glass-panel-heavy rounded-3xl p-6 sm:p-8 relative overflow-hidden border border-blue-500/30">
+              <div class="absolute top-0 right-0 w-64 h-64 bg-blue-600/15 rounded-full blur-3xl pointer-events-none"></div>
+
+              <div class="relative z-10 space-y-5">
+                <div class="flex items-center gap-3">
+                  <div class="w-12 h-12 rounded-2xl bg-blue-600/20 border border-blue-400/40 text-blue-400 flex items-center justify-center shrink-0">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                  </div>
+                  <div>
+                    <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+                      <span>إنستاباي (InstaPay)</span>
+                      <span class="text-xs px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 font-normal">تحويل فوري</span>
+                    </h2>
+                    <p class="text-xs sm:text-sm text-white/70">
+                      أسرع وسيلة تحويل بين الحسابات البنكية المصرية والبطاقات ميزة
+                    </p>
+                  </div>
+                </div>
+
+                <!-- InstaPay Address Box -->
+                <div class="p-4 rounded-2xl bg-black/30 border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3">
+                  <div class="text-center sm:text-right">
+                    <span class="text-xs text-white/60 block">عنوان الدفع اللحظي (IPA)</span>
+                    <span class="font-mono text-lg sm:text-xl font-bold text-blue-300 tracking-wide dir-ltr block select-all">
+                      yasser1241@instapay
+                    </span>
+                  </div>
+
+                  <button type="button" onclick="copyText('yasser1241@instapay', 'تم نسخ عنوان إنستاباي بنجاح')" class="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs sm:text-sm font-bold text-white flex items-center justify-center gap-1.5 transition-all cursor-pointer">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                    <span>نسخ عنوان إنستاباي</span>
+                  </button>
+                </div>
+
+                <!-- Direct InstaPay Transfer Button -->
+                <div class="space-y-2">
+                  <a href="https://ipn.eg/S/yasser1241/instapay/4PxAKc" target="_blank" rel="noopener noreferrer" class="w-full py-4 px-6 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-base sm:text-lg flex items-center justify-center gap-3 shadow-xl shadow-blue-600/35 active:scale-[0.98] transition-all duration-200">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                    <span>الانتقال للدفع المباشر عبر إنستاباي</span>
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                  </a>
+                  <p class="text-center text-[11px] text-white/50">
+                    Powered by InstaPay Egypt • يمكنك فتح الرابط مباشرة من هاتفك
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pay Option 2: Vodafone Cash & Electronic Wallets -->
+            <div class="glass-panel-heavy rounded-3xl p-6 sm:p-8 relative overflow-hidden border border-emerald-500/30">
+              <div class="absolute top-0 right-0 w-64 h-64 bg-emerald-600/15 rounded-full blur-3xl pointer-events-none"></div>
+
+              <div class="relative z-10 space-y-5">
+                <div class="flex items-center gap-3">
+                  <div class="w-12 h-12 rounded-2xl bg-emerald-600/20 border border-emerald-400/40 text-emerald-400 flex items-center justify-center shrink-0">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg>
+                  </div>
+                  <div>
+                    <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+                      <span>المحفظة الإلكترونية</span>
+                      <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-normal">فودافون كاش وكافة المحافظ</span>
+                    </h2>
+                    <p class="text-xs sm:text-sm text-white/70">
+                      استقبل التحويل من محافظ (فودافون، أورنج، اتصالات، وي، والمحافظ الذكية)
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Wallet Box -->
+                <div class="p-4 rounded-2xl bg-black/30 border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3">
+                  <div class="text-center sm:text-right">
+                    <span class="text-xs text-white/60 block">رقم المحفظة الإلكترونية</span>
+                    <span class="font-mono text-2xl font-bold text-emerald-300 tracking-wider dir-ltr block select-all">
+                      01030365646
+                    </span>
+                  </div>
+
+                  <div class="flex items-center gap-2 w-full sm:w-auto">
+                    <button type="button" onclick="copyText('01030365646', 'تم نسخ رقم المحفظة بنجاح')" class="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs sm:text-sm font-bold text-white flex items-center justify-center gap-1.5 transition-all cursor-pointer">
+                      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                      <span>نسخ الرقم</span>
+                    </button>
+                    <a href="tel:*9*7*01030365646#" class="px-3.5 py-2.5 rounded-xl bg-emerald-600/30 hover:bg-emerald-600/50 text-emerald-300 text-xs font-bold border border-emerald-500/40 flex items-center gap-1 transition-all" title="كود تحويل فودافون كاش السريع">
+                      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><line x1="12" x2="12.01" y1="18" y2="18"/></svg>
+                      <span>كود التحويل</span>
+                    </a>
+                  </div>
+                </div>
+
+                <!-- Step Instructions -->
+                <div class="p-4 rounded-xl bg-white/5 border border-white/5 text-xs text-white/70 space-y-2">
+                  <div class="font-semibold text-white flex items-center gap-1.5">
+                    <span class="text-emerald-400">❓</span>
+                    <span>كيفية التحويل من أي محفظة إلكترونية:</span>
+                  </div>
+                  <ol class="list-decimal list-inside space-y-1 text-white/60 pr-1">
+                    <li>افتح تطبيق محفظتك (أو اطلب كود المحفظة الخاص بشركتك).</li>
+                    <li>اختر "تحويل أموال" ثم أدخل رقم المستلم: <strong class="text-white font-mono">01030365646</strong></li>
+                    <li>حدد المبلغ المطلوب وأدخل الرقم السري لتأكيد التحويل.</li>
+                    <li>احتفظ بلقطة شاشة أو كود الإيصال لتأكيد الدفع.</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+
+            <!-- Transfer Confirmation Card -->
+            <div class="glass-panel rounded-2xl p-5 border border-white/10 space-y-4">
+              <div class="flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-right">
+                <div>
+                  <h3 class="font-bold text-white text-sm sm:text-base flex items-center justify-center sm:justify-start gap-2">
+                    <svg class="w-4 h-4 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                    <span>تأكيد عملية التحويل وإرسال الإيصال</span>
+                  </h3>
+                  <p class="text-xs text-white/60 mt-0.5">
+                    بعد إتمام التحويل، يمكنك إرسال إشعار فوري عبر واتساب لتأكيد الاستلام
+                  </p>
+                </div>
+
+                <div class="flex items-center gap-2">
+                  <input id="pay-amount-input" type="number" placeholder="المبلغ (اختياري)" oninput="updatePayConfirmUrl(this.value)" class="w-28 px-3 py-1.5 rounded-xl bg-white/10 border border-white/15 text-xs text-white text-center focus:outline-none focus:border-emerald-500" />
+                  <span class="text-xs text-white/60">ج.م</span>
+                </div>
+              </div>
+
+              <a id="pay-confirm-btn" href="https://wa.me/201143298437?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%D8%8C%20%D9%82%D9%85%D8%AA%20%D8%A8%D8%AA%D8%AD%D9%88%D9%8A%D9%84%20%D9%85%D8%A7%D9%84%D9%8A%D8%8C%20%D9%8A%D8%B1%D8%AC%D9%89%20%D8%AA%D8%A3%D9%83%D9%8A%D8%AF%20%D8%A7%D8%B3%D8%AA%D9%84%D8%A7%D9%85%20%D8%A7%D9%84%D9%85%D8%B9%D8%A7%D9%85%D9%84%D8%A9%20%D9%88%D9%85%D8%B1%D9%81%D9%82%20%D8%AA%D9%81%D8%A7%D8%B5%D9%8A%D9%84%20%D8%A7%D9%84%D8%A5%D9%8A%D8%B5%D8%A7%D9%84." target="_blank" rel="noopener noreferrer" class="w-full py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/25 active:scale-95 transition-all">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                <span>إرسال إشعار وتأكيد التحويل عبر واتساب</span>
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              </a>
+            </div>
+
+          </div>
+        </section>
+
+      </main>
+
+      <!-- Bottom Fixed Liquid Glass Navbar Dock -->
+      <nav class="fixed bottom-3 sm:bottom-6 inset-x-0 z-40 flex items-center justify-center px-3 pointer-events-none">
+        <div id="liquid-dock" class="pointer-events-auto relative p-1.5 rounded-full glass-dock flex items-center gap-1 shadow-2xl max-w-fit mx-auto">
+          
+          <!-- Gliding Liquid Spring Bubble Indicator -->
+          <div id="dock-bubble" class="liquid-bubble"></div>
+
+          <!-- Tab 1: Home -->
+          <button id="nav-btn-home" type="button" onclick="switchTab('home')" class="nav-btn relative z-10 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold flex items-center gap-1.5 transition-colors cursor-pointer text-white">
+            <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <span>الرئيسية</span>
+          </button>
+
+          <!-- Tab 2: Facebook -->
+          <button id="nav-btn-facebook" type="button" onclick="switchTab('facebook')" class="nav-btn relative z-10 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold flex items-center gap-1.5 transition-colors cursor-pointer text-white/70 hover:text-white">
+            <svg class="w-4 h-4 shrink-0 fill-current" viewBox="0 0 24 24"><path d="M14 8h3V4.5h-3A4.5 4.5 0 0 0 9.5 9v2H7v3.5h2.5V22H13v-7.5h3l.5-3.5H13V9.2c0-.7.3-1.2 1-1.2z"/></svg>
+            <span>فيسبوك</span>
+          </button>
+
+          <!-- Tab 3: WhatsApp -->
+          <button id="nav-btn-whatsapp" type="button" onclick="switchTab('whatsapp')" class="nav-btn relative z-10 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold flex items-center gap-1.5 transition-colors cursor-pointer text-white/70 hover:text-white">
+            <svg class="w-4 h-4 shrink-0 fill-current" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2.5a9.5 9.5 0 0 0-8.2 14.3L2.5 21.5l4.8-1.26A9.5 9.5 0 1 0 12 2.5zM8.7 7.4c.3-.3.7-.3.9-.1l1 1.6c.1.2.1.4 0 .6l-.5.7c.6 1.1 1.5 2 2.7 2.6l.7-.6c.2-.2.4-.2.6-.1l1.7 1c.2.2.2.5 0 .9-.5.9-1.5 1.3-2.5 1-2.8-.8-5-3-5.7-5.6-.2-.9.2-1.7 1.1-2z"/></svg>
+            <span>واتساب</span>
+          </button>
+
+          <!-- Tab 4: TikTok -->
+          <button id="nav-btn-tiktok" type="button" onclick="switchTab('tiktok')" class="nav-btn relative z-10 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold flex items-center gap-1.5 transition-colors cursor-pointer text-white/70 hover:text-white">
+            <svg class="w-4 h-4 shrink-0 fill-current" viewBox="0 0 24 24"><path d="M16.6 2.5h-3.3v12.4a2.5 2.5 0 1 1-2.5-2.5c.3 0 .5 0 .8.1V9.1a5.8 5.8 0 1 0 5 5.8V8.8c1.1.9 2.5 1.4 4 1.4V6.9c-2.1 0-3.7-1.7-4-4.4z"/></svg>
+            <span>تيك توك</span>
+          </button>
+
+          <!-- Tab 5: Pay -->
+          <button id="nav-btn-pay" type="button" onclick="switchTab('pay')" class="nav-btn relative z-10 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold flex items-center gap-1.5 transition-colors cursor-pointer text-white/70 hover:text-white">
+            <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+            <span>الدفع</span>
+            <span class="text-[9px] px-1.5 py-0.2 rounded-full bg-blue-500/40 text-blue-200">فوري</span>
+          </button>
+
+          <!-- Separator & Quick Dial Call Icon -->
+          <div class="w-px h-5 bg-white/20 mx-0.5"></div>
+          <a href="tel:01143298437" class="relative z-10 p-2 sm:p-2.5 rounded-full bg-white/10 hover:bg-emerald-500/30 text-white hover:text-emerald-300 transition-colors cursor-pointer" title="اتصال هاتفي">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </a>
+        </div>
+      </nav>
+
+    </div>
+
+    <!-- Floating Toast Notification -->
+    <div id="toast" class="fixed top-6 inset-x-0 z-50 flex justify-center pointer-events-none transition-all duration-300 opacity-0 -translate-y-4">
+      <div class="px-4 py-2.5 rounded-2xl glass-dock border border-white/25 text-white text-xs sm:text-sm font-bold shadow-2xl flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+        <span id="toast-message">تم النسخ بنجاح ✓</span>
+      </div>
+    </div>
+
+    <!-- Interactive Scripts -->
+    <script>
+      let currentTab = 'home';
+
+      function updateDockBubble() {
+        const btn = document.getElementById('nav-btn-' + currentTab);
+        const bubble = document.getElementById('dock-bubble');
+        if (btn && bubble) {
+          bubble.style.left = btn.offsetLeft + 'px';
+          bubble.style.width = btn.offsetWidth + 'px';
+        }
+      }
+
+      function switchTab(tabId) {
+        currentTab = tabId;
+        
+        // Hide all tabs
+        document.querySelectorAll('.tab-pane').forEach(el => el.classList.add('hidden'));
+        
+        // Show active tab
+        const activePane = document.getElementById('tab-' + tabId);
+        if (activePane) {
+          activePane.classList.remove('hidden');
+        }
+
+        // Update button text colors
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+          btn.classList.remove('text-white');
+          btn.classList.add('text-white/70');
+        });
+        const activeBtn = document.getElementById('nav-btn-' + tabId);
+        if (activeBtn) {
+          activeBtn.classList.remove('text-white/70');
+          activeBtn.classList.add('text-white');
+        }
+
+        // Reposition bubble
+        updateDockBubble();
+
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      function showToast(msg) {
+        const toast = document.getElementById('toast');
+        const textEl = document.getElementById('toast-message');
+        textEl.textContent = msg;
+        toast.classList.remove('opacity-0', '-translate-y-4');
+        toast.classList.add('opacity-100', 'translate-y-0');
+
+        setTimeout(() => {
+          toast.classList.remove('opacity-100', 'translate-y-0');
+          toast.classList.add('opacity-0', '-translate-y-4');
+        }, 2200);
+      }
+
+      function copyText(text, successMsg) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(() => {
+            showToast(successMsg || 'تم النسخ بنجاح ✓');
+          }).catch(() => {
+            fallbackCopy(text, successMsg);
+          });
+        } else {
+          fallbackCopy(text, successMsg);
+        }
+      }
+
+      function fallbackCopy(text, successMsg) {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        showToast(successMsg || 'تم النسخ بنجاح ✓');
+      }
+
+      function handleShare() {
+        if (navigator.share) {
+          navigator.share({
+            title: 'Yasser Mohamed - Liquid Glass Hub',
+            text: 'منصة التواصل المباشر وبوابة التحويل السريع',
+            url: window.location.href,
+          }).catch(() => {});
+        } else {
+          copyText(window.location.href, 'تم نسخ رابط المنصة للمشاركة');
+        }
+      }
+
+      function toggleQR() {
+        const p = document.getElementById('qr-panel');
+        if (p) p.classList.toggle('hidden');
+      }
+
+      function updateWaUrl(msg) {
+        const btn = document.getElementById('main-wa-btn');
+        if (btn) {
+          btn.href = 'https://wa.me/201143298437?text=' + encodeURIComponent(msg);
+        }
+      }
+
+      function updatePayConfirmUrl(amount) {
+        const btn = document.getElementById('pay-confirm-btn');
+        if (!btn) return;
+        const msg = amount 
+          ? `السلام عليكم، قمت بتحويل مبلغ ${amount} ج.م، يرجى تأكيد استلام المعاملة ومرفق تفاصيل الإيصال.`
+          : `السلام عليكم، قمت بتحويل مالي، يرجى تأكيد استلام المعاملة ومرفق تفاصيل الإيصال.`;
+        btn.href = 'https://wa.me/201143298437?text=' + encodeURIComponent(msg);
+      }
+
+      window.addEventListener('load', () => {
+        updateDockBubble();
+      });
+
+      window.addEventListener('resize', () => {
+        updateDockBubble();
+      });
+
+      // Initial alignment
+      setTimeout(updateDockBubble, 100);
+    </script>
   </body>
 </html>
-
